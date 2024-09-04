@@ -1,8 +1,7 @@
 import { MikroORM } from '@mikro-orm/core';
-import { Todo } from './common/entities/todo.entity';
 
 export default {
-  entities: [Todo],
+  entities: [],
   dbName: process.env.DATABASE_NAME,
   type: 'postgresql',
   user: process.env.DATABASE_USER,
