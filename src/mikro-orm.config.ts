@@ -1,12 +1,17 @@
 import { MikroORM } from '@mikro-orm/core';
+import { Todo } from './common/entities/todo.entity';
+import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 
 export default {
-  entities: [],
-  dbName: process.env.DATABASE_NAME,
-  type: 'postgresql',
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  host: process.env.DATABASE_HOST,
-  port: parseInt(process.env.DATABASE_PORT, 10),
+  entities: [Todo],
+  dbName: 'todo_db',
+  driver: PostgreSqlDriver,
+  user: 'postgres',
+  password: '123456',
+  host: 'localhost',
+  port: 5432,
   debug: true,
+  migrations: {
+    path: 'src/db/migrations',
+  },
 } as Parameters<typeof MikroORM.init>[0];
