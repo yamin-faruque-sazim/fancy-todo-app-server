@@ -1,10 +1,18 @@
-import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core';
+import {
+  Entity,
+  EntityRepositoryType,
+  Enum,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/core';
 import { v4 as uuidv4 } from 'uuid';
 import { ETodoPriority } from '../enums/todo-priority.enum';
 import { TodoRepository } from '../../todos/todos.repository';
 
-@Entity({ repository: () => TodoRepository })
+@Entity({ tableName: 'todo', repository: () => TodoRepository })
 export class Todo {
+  [EntityRepositoryType]?: TodoRepository;
+
   @PrimaryKey({ type: 'uuid' })
   id: string = uuidv4();
 
@@ -14,7 +22,7 @@ export class Todo {
   @Property({ type: 'text' })
   description!: string;
 
-  @Property({ default: false })
+  @Property({ default: false, fieldName: 'is_completed' })
   isCompleted: boolean = false;
 
   @Enum({ items: () => ETodoPriority })
