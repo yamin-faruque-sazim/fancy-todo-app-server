@@ -22,4 +22,12 @@ export class TodosService {
     }
     return foundTodo;
   }
+
+  async getTodoById(id: string): Promise<Todo> {
+    const foundTodo = await this.todoRepository.findOne({ id: id });
+    if (!foundTodo) {
+      throw new NotFoundException(`Todo with ID "${id}" not found`);
+    }
+    return foundTodo;
+  }
 }
