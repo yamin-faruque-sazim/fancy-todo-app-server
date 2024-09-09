@@ -16,9 +16,4 @@ export class TodosController {
   async getTodoById(@Param('id') id: string): Promise<Todo> {
     return this.todosService.getTodoById(id);
   }
-
-  @Get('/:id')
-  async getTodoById(@Param('id') id: string): Promise<Todo> {
-    return await this.todosService.getTodoById(id);
-  }
 }
