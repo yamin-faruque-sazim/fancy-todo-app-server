@@ -9,7 +9,7 @@ export class TodosController {
 
   @Post()
   async createTodos(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
-    return await this.todosService.createTodos(createTodoDto);
+    return await this.todosService.createOne(createTodoDto);
   }
 
   @Get('/:id')
