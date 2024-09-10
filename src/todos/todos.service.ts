@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { CreateTodoDto } from './create-todo.dto';
+import { CreateTodoDto, UpdateTodoDto } from './todos.dto';
 import { Todo } from '@/common/entities/todo.entity';
 import { TodoRepository } from './todos.repository';
 
@@ -20,6 +20,13 @@ export class TodosService {
     if (!foundTodo) {
       throw new NotFoundException(`Todo with ID "${id}" not found`);
     }
+    return foundTodo;
+  }
+
+  async updateTodoById(id: string, updateTodo: UpdateTodoDto): Promise<Todo> {
+    const foundTodo = await this.getTodoById(id);
+    this.todoRepository.assign(foundTodo, updateTodo);
+    await this.todoRepository.getEntityManager().flush();
     return foundTodo;
   }
 }
