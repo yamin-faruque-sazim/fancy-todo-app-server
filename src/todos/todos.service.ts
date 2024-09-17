@@ -26,4 +26,8 @@ export class TodosService {
   async updateOne(id: string, updateTodo: UpdateTodoDto): Promise<Todo> {
     return await this.todoRepository.updateOne(id, updateTodo);
   }
+  async deleteOne(id: string): Promise<void> {
+    const todoItem = await this.getTodoById(id);
+    await this.todoRepository.getEntityManager().removeAndFlush(todoItem);
+  }
 }
