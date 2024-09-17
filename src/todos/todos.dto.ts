@@ -1,13 +1,13 @@
 import { ETodoPriority } from '@/common/enums/todo-priority.enum';
+import { Type } from 'class-transformer';
 
 import {
   IsBoolean,
-  IsDateString,
+  IsDate,
   IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
-  Matches,
 } from 'class-validator';
 
 export class CreateTodoDto {
@@ -20,10 +20,8 @@ export class CreateTodoDto {
   description!: string;
 
   @IsNotEmpty({ message: 'Due date is required.' })
-  @IsDateString({ strict: true })
-  @Matches(/^\d{4}-\d{2}-\d{2}$/, {
-    message: 'Invalid date format. Use YYYY-MM-DD.',
-  })
+  @IsDate()
+  @Type(() => Date)
   dueDate!: Date;
 
   @IsNotEmpty()
@@ -43,10 +41,8 @@ export class UpdateTodoDto {
   description?: string;
 
   @IsOptional()
-  @IsDateString({ strict: true })
-  @Matches(/^\d{4}-\d{2}-\d{2}$/, {
-    message: 'Invalid date format. Use YYYY-MM-DD.',
-  })
+  @IsDate()
+  @Type(() => Date)
   dueDate?: Date;
 
   @IsOptional()

@@ -23,10 +23,7 @@ export class TodosService {
     return foundTodo;
   }
 
-  async updateTodoById(id: string, updateTodo: UpdateTodoDto): Promise<Todo> {
-    const foundTodo = await this.getTodoById(id);
-    this.todoRepository.assign(foundTodo, updateTodo);
-    await this.todoRepository.getEntityManager().flush();
-    return foundTodo;
+  async updateOne(id: string, updateTodo: UpdateTodoDto): Promise<Todo> {
+    return await this.todoRepository.updateOne(id, updateTodo);
   }
 }

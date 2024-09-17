@@ -22,6 +22,6 @@ export class TodosController {
     @Param('id') id: string,
     @Body() updateTodo: UpdateTodoDto,
   ): Promise<Todo> {
-    return await this.todosService.updateTodoById(id, updateTodo);
+    return await this.todosService.updateOne(id, updateTodo);
   }
 }
