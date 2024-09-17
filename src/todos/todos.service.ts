@@ -6,17 +6,17 @@ import { TodoRepository } from './todos.repository';
 
 @Injectable()
 export class TodosService {
-  constructor(private todoRepository: TodoRepository) {}
+  constructor(private todosRepository: TodoRepository) {}
 
   async createOne(createTodoDto: CreateTodoDto): Promise<Todo> {
-    const todo = this.todoRepository.create(createTodoDto);
+    const todo = this.todosRepository.create(createTodoDto);
 
-    await this.todoRepository.getEntityManager().persistAndFlush(todo);
+    await this.todosRepository.getEntityManager().persistAndFlush(todo);
     return todo;
   }
 
   async getTodoById(id: string): Promise<Todo> {
-    const foundTodo = await this.todoRepository.findOne({ id: id });
+    const foundTodo = await this.todosRepository.findOne({ id: id });
     if (!foundTodo) {
       throw new NotFoundException(`Todo with ID "${id}" not found`);
     }
@@ -24,6 +24,10 @@ export class TodosService {
   }
 
   async updateOne(id: string, updateTodo: UpdateTodoDto): Promise<Todo> {
-    return await this.todoRepository.updateOne(id, updateTodo);
+    return await this.todosRepository.updateOne(id, updateTodo);
+  }
+  async deleteOne(id: string): Promise<void> {
+    const todoItem = await this.getTodoById(id);
+    await this.todosRepository.getEntityManager().removeAndFlush(todoItem);
   }
 }
