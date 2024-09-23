@@ -15,6 +15,11 @@ import { CreateTodoDto, UpdateTodoDto } from './todos.dto';
 export class TodosController {
   constructor(private todosService: TodosService) {}
 
+  @Get()
+  async findAll(): Promise<Todo[]> {
+    return await this.todosService.findAll();
+  }
+
   @Post()
   async createTodos(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
     return this.todosService.createOne(createTodoDto);
