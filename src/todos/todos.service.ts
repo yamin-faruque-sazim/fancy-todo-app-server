@@ -8,7 +8,7 @@ import { TodoRepository } from './todos.repository';
 export class TodosService {
   constructor(private todosRepository: TodoRepository) {}
 
-  async getAllTodos(): Promise<Todo[]> {
+  async findAll(): Promise<Todo[]> {
     return await this.todosRepository.findAll();
   }
 

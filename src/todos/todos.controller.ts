@@ -16,8 +16,8 @@ export class TodosController {
   constructor(private todosService: TodosService) {}
 
   @Get()
-  async getAllTodos(): Promise<Todo[]> {
-    return await this.todosService.getAllTodos();
+  async findAll(): Promise<Todo[]> {
+    return await this.todosService.findAll();
   }
 
   @Post()
