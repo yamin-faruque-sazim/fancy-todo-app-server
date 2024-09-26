@@ -1,4 +1,5 @@
 import {
+  DateTimeType,
   Entity,
   EntityRepositoryType,
   Enum,
@@ -28,6 +29,6 @@ export class Todo {
   @Enum({ items: () => ETodoPriority })
   priority!: ETodoPriority;
 
-  @Property({ type: 'date' })
+  @Property({ type: DateTimeType })
   dueDate!: Date;
 }
