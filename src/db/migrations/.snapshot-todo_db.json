@@ -58,8 +58,8 @@
           ],
           "mappedType": "enum"
         },
-        "dueDate": {
-          "name": "dueDate",
+        "due_date": {
+          "name": "due_date",
           "type": "timestamptz",
           "unsigned": false,
           "autoincrement": false,
