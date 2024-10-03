@@ -13,7 +13,6 @@ export class TodosService {
   }
 
   async createOne(createTodoDto: CreateTodoDto): Promise<Todo> {
-    console.log(createTodoDto.dueDate);
     const todo = this.todosRepository.create(createTodoDto);
 
     await this.todosRepository.getEntityManager().persistAndFlush(todo);
