@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { Todo } from '@/common/entities/todo.entity';
@@ -16,8 +17,11 @@ export class TodosController {
   constructor(private todosService: TodosService) {}
 
   @Get()
-  async findAll(): Promise<Todo[]> {
-    return await this.todosService.findAll();
+  async findAll(
+    @Query('sortyBy') sortBy?: string,
+    @Query('sortOrder') sortOrder?: string,
+  ): Promise<Todo[]> {
+    return await this.todosService.findAll(sortBy, sortOrder);
   }
 
   @Post()
