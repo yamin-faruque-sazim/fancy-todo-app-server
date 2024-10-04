@@ -58,15 +58,15 @@
           ],
           "mappedType": "enum"
         },
-        "due_date": {
-          "name": "due_date",
-          "type": "date",
+        "dueDate": {
+          "name": "dueDate",
+          "type": "timestamptz",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": 0,
-          "mappedType": "date"
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
       "name": "todo",

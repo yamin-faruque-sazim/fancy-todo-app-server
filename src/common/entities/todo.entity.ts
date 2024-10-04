@@ -1,4 +1,5 @@
 import {
+  DateTimeType,
   Entity,
   EntityRepositoryType,
   Enum,
@@ -13,21 +14,21 @@ import { TodoRepository } from '../../todos/todos.repository';
 export class Todo {
   [EntityRepositoryType]?: TodoRepository;
 
-  @PrimaryKey({ type: 'uuid' })
+  @PrimaryKey({ type: 'uuid', fieldName: 'id' })
   id: string = uuidv4();
 
-  @Property()
+  @Property({ fieldName: 'title' })
   title!: string;
 
-  @Property({ type: 'text' })
+  @Property({ type: 'text', fieldName: 'description' })
   description!: string;
 
   @Property({ default: false, fieldName: 'is_completed' })
   isCompleted: boolean = false;
 
-  @Enum({ items: () => ETodoPriority })
+  @Enum({ items: () => ETodoPriority, fieldName: 'priority' })
   priority!: ETodoPriority;
 
-  @Property({ type: 'date' })
+  @Property({ type: DateTimeType, fieldName: 'dueDate' })
   dueDate!: Date;
 }
