@@ -44,4 +44,10 @@ export class TodosService {
     await this.todosRepository.getEntityManager().flush();
     return task;
   }
+
+  async deleteCompletedTasks(): Promise<void> {
+    await this.todosRepository
+      .getEntityManager()
+      .nativeDelete(Todo, { isCompleted: true });
+  }
 }
