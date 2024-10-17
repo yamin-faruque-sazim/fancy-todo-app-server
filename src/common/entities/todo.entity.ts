@@ -37,5 +37,5 @@ export class Todo {
     fieldName: 'created_at',
     onCreate: () => new Date(),
   })
-  createdAt?: Date = new Date(); // Default value to current timestamp
+  createdAt?: Date = new Date(); 
 }
