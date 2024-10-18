@@ -77,6 +77,8 @@
           "nullable": false,
           "length": 6,
           "mappedType": "datetime"
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
       "name": "todo",

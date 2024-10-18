@@ -42,6 +42,11 @@ export class TodosController {
   ): Promise<Todo> {
     return await this.todosService.updateOne(id, updateTodo);
   }
+  @Delete('completed')
+  async deleteAllCompletedTasks() {
+    return await this.todosService.deleteCompletedTasks();
+  }
+
   @Delete('/:id')
   async deleteTodoById(@Param('id') id: string): Promise<void> {
     return this.todosService.deleteOne(id);
