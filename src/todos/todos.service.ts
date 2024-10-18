@@ -37,4 +37,11 @@ export class TodosService {
     const todoItem = await this.getTodoById(id);
     await this.todosRepository.getEntityManager().removeAndFlush(todoItem);
   }
+
+  async updateTaskCompletion(id: string, isCompleted: boolean): Promise<Todo> {
+    const task = await this.todosRepository.findOneOrFail({ id });
+    task.isCompleted = isCompleted;
+    await this.todosRepository.getEntityManager().flush();
+    return task;
+  }
 }

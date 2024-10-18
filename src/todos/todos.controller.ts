@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   Query,
@@ -44,5 +45,10 @@ export class TodosController {
   @Delete('/:id')
   async deleteTodoById(@Param('id') id: string): Promise<void> {
     return this.todosService.deleteOne(id);
+  }
+
+  @Patch(':id/complete')
+  async markAsComplete(@Param('id') id: string) {
+    return await this.todosService.updateTaskCompletion(id, true);
   }
 }
