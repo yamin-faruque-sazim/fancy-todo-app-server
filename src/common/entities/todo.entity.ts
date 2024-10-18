@@ -31,4 +31,11 @@ export class Todo {
 
   @Property({ type: DateTimeType, fieldName: 'dueDate' })
   dueDate!: Date;
+
+  @Property({
+    type: DateTimeType,
+    fieldName: 'created_at',
+    onCreate: () => new Date(),
+  })
+  createdAt?: Date = new Date(); 
 }
