@@ -39,9 +39,7 @@ export class TodosService {
   }
 
   async updateTaskCompletion(id: string, isCompleted: boolean): Promise<Todo> {
-    const task = await this.todosRepository
-      .getEntityManager()
-      .findOneOrFail(Todo, { id });
+    const task = await this.todosRepository.findOneOrFail({ id });
     task.isCompleted = isCompleted;
     await this.todosRepository.getEntityManager().flush();
     return task;

@@ -15,15 +15,6 @@ export class TodoRepository extends EntityRepository<Todo> {
     await this.getEntityManager().flush();
     return foundTodo;
   }
-  // async findAllSorted(
-  //   sortBy: string = 'createdAt',
-  //   sortOrder: string = 'asc',
-  // ): Promise<Todo[]> {
-  //   const order = sortOrder === 'desc' ? 'DESC' : 'ASC';
-  //   return await this.findAll({
-  //     orderBy: { [sortBy]: order },
-  //   });
-  // }
 
   async findAllSorted(
     sortBy: string = 'createdAt',
