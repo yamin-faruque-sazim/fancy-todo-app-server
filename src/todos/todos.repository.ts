@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { EntityRepository } from '@mikro-orm/postgresql';
+import { EntityRepository, SelectQueryBuilder } from '@mikro-orm/postgresql';
 
 import { Todo } from '@/common/entities/todo.entity';
 import { UpdateTodoDto } from './todos.dto';
+import { ETodoPriority } from '@/common/enums/todo-priority.enum';
 
 @Injectable()
 export class TodoRepository extends EntityRepository<Todo> {
@@ -16,14 +17,46 @@ export class TodoRepository extends EntityRepository<Todo> {
     return foundTodo;
   }
 
-  async findAllSorted(
-    sortBy: string = 'createdAt',
+  async findAllFiltered(
+    filterBy: string = '',
+    priority: string = '',
     sortOrder: string = 'asc',
+    dueDateSort: string = '',
+    isCompleted: string = '',
   ): Promise<Todo[]> {
-    const order = sortOrder === 'desc' ? 'DESC' : 'ASC';
+    const queryBuilder = this.createQueryBuilder('todo');
 
-    return await this.findAll({
-      orderBy: [{ isCompleted: 'ASC' }, { [sortBy]: order }],
-    });
+    if (filterBy === 'priority' && priority) {
+      const priorityMap: { [key in keyof typeof ETodoPriority]: number } = {
+        HIGH: 3,
+        MEDIUM: 2,
+        LOW: 1,
+      };
+
+      const priorityKey = priority.toUpperCase() as keyof typeof priorityMap;
+      queryBuilder.andWhere({ priority: priorityMap[priorityKey] });
+    }
+
+    if (isCompleted !== '') {
+      const completed = isCompleted === 'true';
+      queryBuilder.andWhere({ isCompleted: completed });
+    }
+
+    const orderByCriteria: any = {};
+
+    if (filterBy === 'priority') {
+      orderByCriteria['priority'] = sortOrder === 'desc' ? 'DESC' : 'ASC';
+    }
+
+    if (dueDateSort) {
+      orderByCriteria['dueDate'] = dueDateSort === 'desc' ? 'DESC' : 'ASC';
+    }
+
+    orderByCriteria['isCompleted'] = 'ASC';
+    orderByCriteria['createdAt'] = 'ASC';
+
+    queryBuilder.orderBy(orderByCriteria);
+
+    return await queryBuilder.getResult();
   }
 }

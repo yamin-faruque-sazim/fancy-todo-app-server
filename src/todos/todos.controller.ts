@@ -19,10 +19,19 @@ export class TodosController {
 
   @Get()
   async findAll(
-    @Query('sortyBy') sortBy?: string,
+    @Query('filterBy') filterBy?: string,
+    @Query('priority') priority?: string,
     @Query('sortOrder') sortOrder?: string,
+    @Query('dueDateSort') dueDateSort?: string,
+    @Query('isCompleted') isCompleted?: string,
   ): Promise<Todo[]> {
-    return await this.todosService.findAll(sortBy, sortOrder);
+    return await this.todosService.findAll(
+      filterBy,
+      priority,
+      sortOrder,
+      dueDateSort,
+      isCompleted,
+    );
   }
 
   @Post()
