@@ -3,22 +3,43 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTodoDto, UpdateTodoDto } from './todos.dto';
 import { Todo } from '@/common/entities/todo.entity';
 import { TodoRepository } from './todos.repository';
+import { ETodoPriority } from '@/common/enums/todo-priority.enum';
 
 @Injectable()
 export class TodosService {
   constructor(private todosRepository: TodoRepository) {}
 
   async findAll(
-    sortBy: string = 'createdAt',
+    filterBy: string = '',
+    priority: string = '',
     sortOrder: string = 'asc',
+    dueDateSort: string = '',
+    isCompleted: string = '',
   ): Promise<Todo[]> {
-    return await this.todosRepository.findAllSorted(sortBy, sortOrder);
+    return await this.todosRepository.findAllFiltered(
+      filterBy,
+      priority,
+      sortOrder,
+      dueDateSort,
+      isCompleted,
+    );
   }
 
   async createOne(createTodoDto: CreateTodoDto): Promise<Todo> {
-    const todo = this.todosRepository.create(createTodoDto);
+    const priorityMap: { [key in keyof typeof ETodoPriority]: number } = {
+      HIGH: 3,
+      MEDIUM: 2,
+      LOW: 1,
+    };
 
+    const todoData = {
+      ...createTodoDto,
+      priority: priorityMap[createTodoDto.priority] || 1,
+    };
+
+    const todo = this.todosRepository.create(todoData);
     await this.todosRepository.getEntityManager().persistAndFlush(todo);
+
     return todo;
   }
 

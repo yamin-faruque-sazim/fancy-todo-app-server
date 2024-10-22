@@ -46,16 +46,11 @@
         },
         "priority": {
           "name": "priority",
-          "type": "text",
+          "type": "smallint",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "enumItems": [
-            "HIGH",
-            "MEDIUM",
-            "LOW"
-          ],
           "mappedType": "enum"
         },
         "dueDate": {
@@ -75,8 +70,6 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "length": 6,
-          "mappedType": "datetime"
           "length": 6,
           "mappedType": "datetime"
         }
